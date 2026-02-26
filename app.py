@@ -1,7 +1,6 @@
 import streamlit as st
 from PIL import Image, ImageDraw, ImageFont
 import numpy as np
-import cv2
 import mediapipe as mp
 import rembg
 import io
@@ -50,10 +49,7 @@ class PassportValidator:
             return False, [self.initialization_error], None
 
         h, w, _ = image_np.shape
-        
-        # Convert BGR (OpenCV default) to RGB for MediaPipe
-        rgb_image = cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB)
-        results = self.face_mesh.process(rgb_image)
+        results = self.face_mesh.process(image_np)
 
         if not results.multi_face_landmarks:
             return False, ["No face detected. Please upload a clearer photo."], None
@@ -215,9 +211,8 @@ def main():
         # Load Image
         image_pil = Image.open(uploaded_file).convert("RGB")
         
-        # Convert to OpenCV format for analysis
+        # Keep as RGB for MediaPipe analysis
         image_np = np.array(image_pil)
-        image_np = image_np[:, :, ::-1].copy() # RGB to BGR
 
         with st.spinner("Analyzing face..."):
             # 1. Validate Face
