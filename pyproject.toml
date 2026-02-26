@@ -1,0 +1,14 @@
+[project]
+name = "passporter"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "mediapipe==0.10.14",
+    "numpy>=2.4.2",
+    "opencv-python>=4.13.0.92",
+    "pillow>=12.1.1",
+    "rembg[cpu]>=2.0.72",
+    "streamlit>=1.54.0",
+]
